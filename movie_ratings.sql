@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: movie_ratings
 -- ------------------------------------------------------
--- Server version	9.1.0
+-- Server version 9.1.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,21 +24,12 @@ DROP TABLE IF EXISTS `movies`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `movies` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(100) DEFAULT NULL,
+  `title` varchar(100) NOT NULL,
   `description` text,
   `release_year` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `movies`
---
-
-LOCK TABLES `movies` WRITE;
-/*!40000 ALTER TABLE `movies` DISABLE KEYS */;
-/*!40000 ALTER TABLE `movies` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `ratings`
@@ -49,26 +40,17 @@ DROP TABLE IF EXISTS `ratings`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ratings` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int DEFAULT NULL,
-  `movie_id` int DEFAULT NULL,
-  `rating` int DEFAULT NULL,
+  `user_id` int NOT NULL,
+  `movie_id` int NOT NULL,
+  `rating` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `movie_id` (`movie_id`),
   CONSTRAINT `ratings_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `ratings_ibfk_2` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `ratings_chk_1` CHECK ((`rating` between 1 and 10))
+  CONSTRAINT `ratings_chk_1` CHECK (`rating` BETWEEN 1 AND 10)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `ratings`
---
-
-LOCK TABLES `ratings` WRITE;
-/*!40000 ALTER TABLE `ratings` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ratings` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `users`
@@ -79,8 +61,8 @@ DROP TABLE IF EXISTS `users`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) DEFAULT NULL,
-  `password_hash` varchar(255) DEFAULT NULL,
+  `username` varchar(50) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
   `is_admin` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
@@ -96,7 +78,6 @@ LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
